@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace EddysStudio\GroupChat\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class GroupChatCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'group-chat';
 
     public $description = 'My command';
 

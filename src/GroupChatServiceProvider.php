@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace EddysStudio\GroupChat;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -13,14 +13,14 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
+use EddysStudio\GroupChat\Commands\GroupChatCommand;
+use EddysStudio\GroupChat\Testing\TestsGroupChat;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class GroupChatServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'group-chat';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'group-chat';
 
     public function configurePackage(Package $package): void
     {
@@ -36,7 +36,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('eddysstudio/group-chat');
             });
 
         $configFileName = $package->shortName();
@@ -80,18 +80,25 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
+                    $file->getRealPath() => base_path("stubs/group-chat/{$file->getFilename()}"),
+                ], 'group-chat-stubs');
             }
         }
-
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');  
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'group-chat'); 
+        $this->publishes([
+            __DIR__.'/../resources/js/axios.min.js' => public_path('vendor/group-chat/axios.min.js'),
+            __DIR__.'/../resources/js/alpine.min.js' => public_path('vendor/group-chat/alpine.min.js'),
+            __DIR__.'/../resources/css/main.css' => public_path('vendor/group-chat/main.css')
+        ], 'group-chat-assets');
         // Testing
-        Testable::mixin(new TestsSkeleton);
+        Testable::mixin(new TestsGroupChat);
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'eddysstudio/group-chat';
     }
 
     /**
@@ -100,9 +107,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            // Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            // Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
+            // AlpineComponent::make('group-chat', __DIR__ . '/../resources/dist/components/group-chat.js'),
+            // Css::make('group-chat-styles', __DIR__ . '/../resources/dist/group-chat.css'),
+            // Js::make('group-chat-scripts', __DIR__ . '/../resources/dist/group-chat.js'),
+            Js::make('group-chat-scripts', __DIR__ . '/../resources/js/axios.min.js'),
         ];
     }
 
@@ -112,7 +120,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            SkeletonCommand::class,
+            GroupChatCommand::class,
         ];
     }
 
@@ -146,7 +154,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_skeleton_table',
+            'create_group-chat_table',
         ];
     }
 }

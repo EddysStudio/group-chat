@@ -1,0 +1,7 @@
+#chat-container {
+    max-width: 700px;
+    margin:0 auto;
+    height:100%;
+}
+#chat-container #messages, #chat-container #messages form {width: 100%;}
+#chat-container #messages textarea {width: 100%;}
