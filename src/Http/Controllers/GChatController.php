@@ -13,8 +13,13 @@ class GChatController extends Controller
 {
     
     protected string $cookieName = 'gchat_token';
-    protected string $hash_salt = 'dfgch';
+    protected string $hash_salt;
 
+    public function __construct()
+    {
+        $this->hash_salt = config('app.key');
+    }
+    
     public function index()
     {
         return view('group-chat::chat');
