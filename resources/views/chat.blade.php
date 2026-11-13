@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Групповой чат</title>    
+    <title>Групповой чат</title>  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('vendor/group-chat/main.css').'?'.time() }}"  rel="stylesheet"/>
     <script defer src="{{ asset('vendor/group-chat/alpine.min.js') }}"></script>
@@ -15,7 +17,7 @@
                 <template x-for="msg in messages" :key="msg.id">
                     <div class="message-wrp">
                         <div class="message" :class="{ 'online': msg.user_online }">
-                            <span class="author" x-text="msg.user_name || 'Anonim'"></span>:
+                            <span class="author" x-text="msg.user_name || 'Anonim:'"></span>
                             <span class="text" x-text="msg.message"></span>
                             <span class="time" x-text="msg.created_at"></span>
                         </div>
