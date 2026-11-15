@@ -28,7 +28,7 @@ Add the following to the `require` section of your project's `composer.json`:
 ```json
 "require":
     {
-        ..
+
         "eddysstudio/group-chat": "^0.9"
     }
 ```
