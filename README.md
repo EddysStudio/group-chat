@@ -16,7 +16,7 @@ Both users and their messages are stored in the database. It is assumed that the
 
 ```json
 "repositories": [
-    ...
+    ..
     {
         "type": "vcs",
         "url": "https://github.com/EddysStudio/group-chat"
@@ -28,7 +28,7 @@ Add the following to the `require` section of your project's `composer.json`:
 ```json
 "require":
     {
-        ...
+        ..
         "eddysstudio/group-chat": "^0.9"
     }
 ```
