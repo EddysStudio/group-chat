@@ -21,7 +21,7 @@ Both users and their messages are stored in the database. It is assumed that the
         "type": "vcs",
         "url": "https://github.com/EddysStudio/group-chat"
     }
-]```
+]
 
 Add the following to the `require` section of your project's `composer.json`:
 
@@ -31,24 +31,24 @@ Add the following to the `require` section of your project's `composer.json`:
         ..
         "eddysstudio/group-chat": "^0.9"
     }
-```
+
 
 2. Run the following composer commands in your project directory: 
 ```bash
     composer update eddysstudio/group-chat
     composer dump-autoload
-```
+
 
 3. Run the following artisan commands in your project directory:
 ```bash
     php artisan vendor:publish --tag=group-chat-assets --force
     php artisan migrate
-```
+
 
 4. Finally, register the plugin in your Filament panel provider (usually /app/Providers/Filament/AdminPanelProvider.php) :
 ```php
     ->plugin(new \EddysStudio\GroupChat\GroupChat())
-```
+
 
 ## License
 
