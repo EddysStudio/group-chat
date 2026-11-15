@@ -11,7 +11,7 @@
 </head>
 <body>    
     <div id="chat-container" x-data="chatForm()">
-        <h1>Наш секретный чатик</h1>
+        <h1>Our secret chat</h1>
         <div id="messages-wrp">
             <div id="messages">
                 <template x-for="msg in messages" :key="msg.id">
@@ -27,9 +27,9 @@
         </div>
 
         <form id="message-form" @submit.prevent="sendMessage">
-            <textarea id="message-input"  x-model="message" placeholder="Ваше сообщение...">
+            <textarea id="message-input"  x-model="message" placeholder="Your message...">
             </textarea>    
-            <button type="submit">Отправить</button>
+            <button type="submit">Send</button>
         </form>
     </div>
     <script>
@@ -70,7 +70,7 @@
                             return newItem;
                         });
                     } catch (error) {
-                        console.error('Ошибка загрузки сообщений:', error.message);
+                        console.error('Request error:', error.message);
                     }    
                 },
                 
@@ -93,12 +93,12 @@
                             else this.messages.push(...data.messages);
                         this.lastMessageId = this.messages[this.messages.length-1].id;
                     } catch (error) {
-                        console.error('Ошибка загрузки сообщений:', error.message);
+                        console.error('Error loading messages:', error.message);
                     } finally {
-                        // следующий вызов через 5 секунд
+                        // next request in a few seconds
                         
                         if(this.timerId) clearTimeout(this.timerId);
-                        // увеличим ожидание, если долго не пишешь
+                        // increasing the timeout if no messages have been sent for a long time
                         if(this.timepass < (Date.now()-120000)) this.timeout = 60000; 
                         this.timerId = setTimeout(
                             () => this.getMessages(this.lastMessageId), this.timeout
@@ -124,7 +124,6 @@
                         });
 
                         if (!response.ok) {
-                            // Если сервер вернул 422 (валидация) или 419 (CSRF)
                             const errorData = await response.json().catch(() => ({}));
                             throw new Error(errorData.message || `HTTP ${response.status}`);
                         } else {
@@ -144,8 +143,8 @@
                         }                        
                         
                     } catch (error) {
-                        console.error('Ошибка отправки:', error.response?.data || error.message);
-                        alert('Не удалось отправить сообщение');
+                        console.error('Sending error:', error.response?.data || error.message);
+                        alert('Failed to send message');
                     } finally {
                         this.sending = false;
                     }

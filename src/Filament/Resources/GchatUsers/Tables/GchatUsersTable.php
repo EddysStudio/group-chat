@@ -18,7 +18,7 @@ class GchatUsersTable
                     ->searchable(),
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('fio')
+                TextColumn::make('fio')->label('fullname')
                     ->searchable(),
                 TextColumn::make('last_time')
                     ->dateTime()
